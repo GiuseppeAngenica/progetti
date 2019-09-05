@@ -134,8 +134,21 @@ def save():
 ### SCREENSHOT ###
 def screenshot():
     d = os.getcwd()
-    destinazione = input("Target name: ")
     n = 1
+    while True:
+        try:
+            destinazione = input("Target name (type \"close\" to return to the menu): ")
+            if destinazione == "close":
+                print("Returning to menu...")
+                time.sleep(1)
+                os.system("cls")
+                menu()
+            os.chdir(d+"/"+destinazione)
+            savepoint = os.getcwd()
+        except FileNotFoundError:
+            print(f"No file for\"{destinazione}\"")
+        else:
+            break
     os.system("cls")
     print('''
 
@@ -151,10 +164,11 @@ def screenshot():
     while True:
         if keyboard.is_pressed("è"):
             screenshot = pyautogui.screenshot()
-            screenshot.save(d+"/"+destinazione+"/Screenshot/"+str(n)+".png")
+            screenshot.save(savepoint+"/Screenshot/"+str(n)+".png")
             n = n+1
         elif keyboard.is_pressed("-"):
             os.system("cls")
+            os.chdir(d)
             menu()
 
 ### DATABASE ###
@@ -201,9 +215,21 @@ def database():
 ### EDIT ###
 def edit():
     directorylavoro = os.getcwd()
-    destinazione = input("Target Name: ")
-    os.chdir(directorylavoro+"/"+destinazione)
-    mod = open(destinazione+".txt", "a")
+    while True:
+        try:
+            destinazione = input("Target Name (type \"close\" to return to the menu): ")
+            if destinazione == "close":
+                print("Returning to menu...")
+                time.sleep(1)
+                os.system("cls")
+                menu()
+            else:
+                os.chdir(directorylavoro+"/"+destinazione)
+            mod = open(destinazione+".txt", "a")
+        except FileNotFoundError:
+            print(f"Error: No file for \"{destinazione}\"")
+        else:
+            break
     print(f"Now you're adding a comment into \"{destinazione}\" file.")
     print("Digit \"..\" in a empty string to save and return to the menu")
     print("Digit \"@\" in a empty string to go next line")
@@ -216,6 +242,7 @@ def edit():
             print("Returning to the menu...")
             os.chdir(directorylavoro)
             time.sleep(1)
+            os.system("cls")
             menu()
         elif text == "@":
             mod.write("\n")
@@ -225,5 +252,5 @@ def edit():
 ### EXIT ###
 def exitt():
     input("Press any button to exit> ")
-    exit
+    exit()
 menu()
