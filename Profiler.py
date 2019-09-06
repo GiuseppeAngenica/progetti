@@ -9,7 +9,7 @@ import pyautogui
 
 ### BANNER ###
 data = {}
-
+os.system("title Profiler")
 os.system("color 0a")
 print('''
   _____    _____     ____    ______   _____   _        ______   _____  
@@ -177,7 +177,8 @@ def database():
     startcwd = os.getcwd()
     
     while 1:
-        com = input("\n\n> ")
+        workin = os.getcwd()
+        com = input("\n\n"+workin+"> ")
         if com == "?":
             print('''
  _________________________________\n
